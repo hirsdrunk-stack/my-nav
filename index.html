@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="个人常用公开网站导航，可搜索，可按分类筛选。">
+  <meta name="theme-color" content="#f6f1e7">
+  <title>我的导航</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230c5c56'/%3E%3Cpath fill='%23f4fffc' d='M9 8h8.2c3.5 0 5.8 2 5.8 5.1 0 2.2-1.2 3.9-3.1 4.6L23.6 24h-3.6l-3.2-5.8H12.2V24H9V8zm3.2 2.7v4.8h4.4c1.7 0 2.8-.8 2.8-2.4s-1.1-2.4-2.8-2.4h-4.4z'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f1e7;
+      --surface: #fffdf8;
+      --ink: #1c1915;
+      --muted: #5e574c;
+      --line: #e3dacb;
+      --accent: #0c5c56;
+      --on-accent: #f4fffc;
+      --wash: rgba(12, 92, 86, 0.09);
+      --shadow: 0 1px 0 rgba(48, 36, 18, 0.04), 0 10px 28px rgba(48, 36, 18, 0.05);
+      --sans: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", "Segoe UI", sans-serif;
+      --serif: "Songti SC", "STSong", "Noto Serif SC", "Source Han Serif SC", "Palatino Linotype", Palatino, "WenQuanYi Micro Hei", "Droid Sans Fallback", serif;
+      --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "WenQuanYi Micro Hei Mono", Menlo, Consolas, monospace;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #131210;
+      --surface: #1e1c19;
+      --ink: #f6f1e7;
+      --muted: #c8c0b3;
+      --line: #3a352e;
+      --accent: #9be6de;
+      --on-accent: #10211f;
+      --wash: rgba(155, 230, 222, 0.08);
+      --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.28);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #131210;
+        --surface: #1e1c19;
+        --ink: #f6f1e7;
+        --muted: #c8c0b3;
+        --line: #3a352e;
+        --accent: #9be6de;
+        --on-accent: #10211f;
+        --wash: rgba(155, 230, 222, 0.08);
+        --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 480px at 0% -8%, var(--wash), transparent 58%),
+        var(--bg);
+      border-top: 3px solid var(--accent);
+    }
+
+    ::selection { background: var(--accent); color: var(--on-accent); }
+
+    .skip {
+      position: absolute;
+      left: 16px;
+      top: -48px;
+      z-index: 5;
+      padding: 8px 12px;
+      background: var(--accent);
+      color: var(--on-accent);
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .skip:focus { top: 12px; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .head { padding: 32px 0 8px; }
+
+    .head-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .seal {
+      flex: none;
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--accent);
+      color: var(--on-accent);
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 2.6vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.15;
+    }
+
+    .lede {
+      margin: 14px 0 0;
+      color: var(--muted);
+    }
+
+    .theme {
+      flex: none;
+      min-width: 76px;
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    html:not([data-theme="dark"]) .when-dark { display: none; }
+    html[data-theme="dark"] .when-light { display: none; }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 16px 0 12px;
+      background: var(--bg);
+    }
+
+    .search { position: relative; }
+
+    .mag {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      width: 18px;
+      height: 18px;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      min-height: 48px;
+      padding: 10px 76px 10px 42px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      font-size: 16px;
+      appearance: none;
+    }
+
+    input[type="search"]::-webkit-search-cancel-button { appearance: none; }
+
+    input::placeholder { color: #6a6256; }
+
+    html[data-theme="dark"] input::placeholder { color: #b7aea0; }
+
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme="light"]) input::placeholder { color: #b7aea0; }
+    }
+
+    input:focus-visible,
+    .theme:focus-visible,
+    .chip:focus-visible,
+    .clear:focus-visible,
+    .card:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .clear {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .chip {
+      min-height: 44px;
+      padding: 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .chip[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: transparent;
+      color: var(--on-accent);
+      font-weight: 700;
+    }
+
+    .count {
+      min-height: 1.5em;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .hint, .noscript, .empty {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .empty {
+      padding: 28px 16px;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .site[hidden] { display: none !important; }
+
+    .grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+      gap: 14px;
+      margin: 0;
+      padding: 4px 0 28px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: 100%;
+      min-height: 156px;
+      padding: 16px 16px 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card:hover { border-color: var(--accent); }
+    .card:hover .go { transform: translate(2px, -2px); }
+
+    .kicker {
+      margin: 0;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .host {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0;
+      margin-top: auto;
+      padding-top: 4px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .host-text { overflow-wrap: anywhere; }
+
+    .go {
+      flex: none;
+      color: var(--accent);
+      font-family: var(--sans);
+      transition: transform 160ms ease;
+    }
+
+    .foot {
+      padding: 8px 0 36px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .foot p { margin: 0; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 640px) {
+      .head { padding-top: 22px; }
+      h1 { font-size: 1.7rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .go, .card { transition: none; }
+      .card:hover .go { transform: none; }
+    }
+
+    @media (prefers-contrast: more) {
+      :root { --line: #6d6558; }
+      :root[data-theme="dark"] { --line: #d5cdc0; }
+    }
+  </style>
+  <script>
+    (function () {
+      var theme = "light";
+      try {
+        var saved = localStorage.getItem("nav-theme");
+        if (saved === "light" || saved === "dark") theme = saved;
+        else if (window.matchMedia("(prefers-color-scheme: dark)").matches) theme = "dark";
+      } catch (e) {}
+      document.documentElement.setAttribute("data-theme", theme);
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute("content", theme === "dark" ? "#131210" : "#f6f1e7");
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip" href="#catalog">跳到网站列表</a>
+  <header class="wrap head">
+    <div class="head-row">
+      <div class="brand">
+        <div class="seal" aria-hidden="true">导</div>
+        <h1>我的导航</h1>
+      </div>
+      <button type="button" class="theme" id="theme" aria-label="切换为深色">
+        <span class="when-light">深色</span>
+        <span class="when-dark">浅色</span>
+      </button>
+    </div>
+    <p class="lede">常用的公开网站。可以搜索，也可以按分类查看。</p>
+  </header>
+
+  <main class="wrap" id="catalog">
+    <div class="toolbar">
+      <div class="search" role="search">
+        <label class="sr-only" for="q">搜索</label>
+        <svg class="mag" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="6"></circle>
+          <path d="M16 16l5 5"></path>
+        </svg>
+        <input id="q" type="search" placeholder="搜索名称、简介或网址" autocomplete="off" autocapitalize="off" enterkeyhint="search">
+        <button type="button" class="clear" id="clear" hidden>清除</button>
+      </div>
+      <div class="filters" role="group" aria-label="分类">
+        <button type="button" class="chip" data-cat="all" aria-pressed="true">全部</button>
+        <button type="button" class="chip" data-cat="ai" aria-pressed="false">AI工具</button>
+        <button type="button" class="chip" data-cat="dev" aria-pressed="false">开发工具</button>
+        <button type="button" class="chip" data-cat="learn" aria-pressed="false">学习</button>
+        <button type="button" class="chip" data-cat="daily" aria-pressed="false">常用网站</button>
+      </div>
+      <p id="count" class="count" aria-live="polite"></p>
+    </div>
+
+    <p class="hint">链接会在新标签页打开。</p>
+    <noscript class="noscript">没有启用 JavaScript 时，下面的链接仍然可以打开。搜索、分类和深浅色切换不可用。</noscript>
+    <p id="empty" class="empty" hidden>没有匹配的网站。换个词，或切回「全部」。</p>
+
+    <!--
+      在这里添加网站
+      复制任意一个 li.site，改 data-cat、kicker、href、h3、desc。
+      分类要成对：ai AI工具，dev 开发工具，learn 学习，daily 常用网站。
+      详细步骤在 README.md。一般不用改本文件底部的脚本。
+    -->
+    <ul class="grid" id="site-list">
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>ChatGPT</h3>
+          <p class="desc">OpenAI 的官方对话产品。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://claude.ai/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>Claude</h3>
+          <p class="desc">Anthropic 的官方助手。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://gemini.google.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>Gemini</h3>
+          <p class="desc">Google 的 Gemini。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>DeepSeek</h3>
+          <p class="desc">深度求索的官方对话页。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://www.kimi.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>Kimi</h3>
+          <p class="desc">月之暗面推出的 Kimi。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://copilot.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>微软 Copilot</h3>
+          <p class="desc">微软的 Copilot。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="ai">
+        <a class="card" href="https://huggingface.co/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">AI工具</p>
+          <h3>Hugging Face</h3>
+          <p class="desc">公开的模型与数据集社区。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>GitHub</h3>
+          <p class="desc">代码托管、协作与开源项目。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://vercel.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Vercel</h3>
+          <p class="desc">部署网站和应用的平台。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Visual Studio Code</h3>
+          <p class="desc">微软的代码编辑器。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Node.js</h3>
+          <p class="desc">JavaScript 运行时的官方网站。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://www.npmjs.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>npm</h3>
+          <p class="desc">JavaScript 包的官方注册库。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Git</h3>
+          <p class="desc">Git 版本管理的官方网站。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Stack Overflow</h3>
+          <p class="desc">编程问答社区。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="dev">
+        <a class="card" href="https://caniuse.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">开发工具</p>
+          <h3>Can I use</h3>
+          <p class="desc">查询浏览器是否支持某项网页功能。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://developer.mozilla.org/zh-CN/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>MDN 中文</h3>
+          <p class="desc">Mozilla 的 Web 开发文档。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>freeCodeCamp</h3>
+          <p class="desc">免费的编程练习与课程。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://www.icourse163.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>中国大学MOOC</h3>
+          <p class="desc">国内高校的在线课程。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://www.coursera.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>Coursera</h3>
+          <p class="desc">高校与机构开设的在线课。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://www.khanacademy.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>可汗学院</h3>
+          <p class="desc">免费的基础学科课程。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://ocw.mit.edu/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>MIT 公开课</h3>
+          <p class="desc">麻省理工学院的公开课程。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="learn">
+        <a class="card" href="https://leetcode.cn/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">学习</p>
+          <h3>力扣</h3>
+          <p class="desc">中文算法与编程练习。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://www.google.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>Google</h3>
+          <p class="desc">网页搜索。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://www.v2ex.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>V2EX</h3>
+          <p class="desc">创意工作者的中文社区。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://zh.wikipedia.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>中文维基百科</h3>
+          <p class="desc">维基百科中文版。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://archive.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>互联网档案馆</h3>
+          <p class="desc">网页和媒体的公开存档。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://www.mozilla.org/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>Mozilla</h3>
+          <p class="desc">Firefox 与开放网络。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+      <li class="site" data-cat="daily">
+        <a class="card" href="https://sspai.com/" target="_blank" rel="noopener noreferrer">
+          <p class="kicker">常用网站</p>
+          <h3>少数派</h3>
+          <p class="desc">数字生活与效率相关的中文媒体。</p>
+          <p class="host"><span class="host-text"></span><span class="go" aria-hidden="true">↗</span></p>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+  <footer class="wrap foot">
+    <p>这些链接都指向公开网站。要增加一条，用 GitHub 网页编辑本页里「在这里添加网站」那一段。</p>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+      var LABELS = { ai: "AI工具", dev: "开发工具", learn: "学习", daily: "常用网站" };
+      var list = document.getElementById("site-list");
+      var items = Array.prototype.slice.call(list.querySelectorAll(".site"));
+      var input = document.getElementById("q");
+      var empty = document.getElementById("empty");
+      var count = document.getElementById("count");
+      var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+      var themeBtn = document.getElementById("theme");
+      var clearBtn = document.getElementById("clear");
+
+      function norm(value) {
+        return String(value || "").toLowerCase().replace(/\s+/g, "");
+      }
+
+      items.forEach(function (item) {
+        var cat = item.getAttribute("data-cat");
+        var kicker = item.querySelector(".kicker");
+        if (kicker && LABELS[cat]) kicker.textContent = LABELS[cat];
+        var link = item.querySelector("a");
+        var hostText = item.querySelector(".host-text");
+        if (!link || !hostText) return;
+        try {
+          var url = new URL(link.getAttribute("href"), window.location.href);
+          var path = url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "");
+          hostText.textContent = url.host + path;
+        } catch (err) {
+          hostText.textContent = link.getAttribute("href") || "";
+        }
+      });
+
+      function currentCat() {
+        var active = document.querySelector('.chip[aria-pressed="true"]');
+        return active ? active.getAttribute("data-cat") : "all";
+      }
+
+      function apply() {
+        var cat = currentCat();
+        var query = norm(input.value);
+        var shown = 0;
+        items.forEach(function (item) {
+          var link = item.querySelector("a");
+          var href = link ? link.getAttribute("href") || "" : "";
+          var blob = norm(item.textContent + " " + href);
+          var catOk = cat === "all" || item.getAttribute("data-cat") === cat;
+          var ok = catOk && (!query || blob.indexOf(query) !== -1);
+          item.hidden = !ok;
+          if (ok) shown += 1;
+        });
+        empty.hidden = shown !== 0;
+        var label = cat === "all" ? "全部" : (LABELS[cat] || "其他");
+        count.textContent = label + " · " + shown + " 个网站";
+        clearBtn.hidden = input.value.length === 0;
+      }
+
+      chips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          chips.forEach(function (other) { other.setAttribute("aria-pressed", "false"); });
+          chip.setAttribute("aria-pressed", "true");
+          apply();
+        });
+      });
+
+      input.addEventListener("input", apply);
+      input.addEventListener("search", apply);
+      clearBtn.addEventListener("click", function () {
+        input.value = "";
+        apply();
+        input.focus();
+      });
+
+      function syncTheme(theme) {
+        var dark = theme === "dark";
+        themeBtn.setAttribute("aria-label", dark ? "切换为浅色" : "切换为深色");
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", dark ? "#131210" : "#f6f1e7");
+      }
+
+      themeBtn.addEventListener("click", function () {
+        var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        syncTheme(next);
+        try { localStorage.setItem("nav-theme", next); } catch (err) {}
+      });
+
+      var scheme = window.matchMedia("(prefers-color-scheme: dark)");
+      function followScheme() {
+        var saved = "";
+        try { saved = localStorage.getItem("nav-theme") || ""; } catch (err) {}
+        if (saved === "light" || saved === "dark") return;
+        var next = scheme.matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", next);
+        syncTheme(next);
+      }
+      if (scheme.addEventListener) scheme.addEventListener("change", followScheme);
+
+      syncTheme(document.documentElement.getAttribute("data-theme") || "light");
+      apply();
+    })();
+  </script>
+</body>
+</html>
